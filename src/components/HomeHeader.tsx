@@ -4,7 +4,7 @@ export interface HomeHeaderProps {}
 
 export default function HomeHeader(props: HomeHeaderProps) {
   return (
-    <section className="fixed top-0 w-[600px] backdrop-blur-md border-b border-gray-700 z-10">
+    <section className="sticky top-0 w-[600px] backdrop-blur-md border-b border-gray-700 z-10">
       <header className="text-lg font-semibold">
         <h1 className="p-4 text-xl font-bold">Home</h1>
         <div className="flex items-center text-center">
