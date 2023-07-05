@@ -15,17 +15,19 @@ export default function Tweet() {
     setValue(val);
   };
   return (
-    <section className="border-b border-t border-gray-700 p-2 pt-[120px]">
+    <section className="border-b border-t border-gray-700 p-2">
       <form action="">
-        <div className="flex flex-col gap-2 p-2">
-          <div className="flex items-center gap-4">
-            <Image
-              className="rounded-full"
-              src="/assets/images/user.jpg"
-              alt="user image"
-              width={40}
-              height={40}
-            />
+        <div className="flex flex-col gap-2 p-2 pt-4">
+          <div className="flex gap-4">
+            <div>
+              <Image
+                className="aspect-square rounded-full"
+                src="/assets/images/user.jpg"
+                alt="user image"
+                width={40}
+                height={40}
+              />
+            </div>
             <textarea
               className="w-full bg-transparent text-xl outline-none"
               placeholder="What's happening?"
@@ -43,5 +45,3 @@ export default function Tweet() {
     </section>
   );
 }
-
-// rounded-full bg-primary px-6 py-2 font-bold transition-opacity hover:opacity-90

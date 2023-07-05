@@ -7,7 +7,7 @@ type HoverConfig = {
   text: string;
 };
 
-const hoverConfig: Record<Label, HoverConfig> = {
+export const hoverConfig: Record<Label, HoverConfig> = {
   comments: {
     bg: "[&>button]:hover:bg-[#0a171f] [&>button]:active:bg-[#0d1e28]",
     text: "group-hover:text-primary",
@@ -56,22 +56,4 @@ export default function PostFooterButton({
       </span>
     </div>
   );
-}
-
-// this was working
-{
-  /* <div
-      className="group flex items-center gap-2 [&>button]:hover:!bg-[#0a171f]"
-      role="button"
-    >
-      <Button
-        size="icon"
-        className="group/button flex items-center justify-center bg-transparent p-2 text-gray-500 group-hover:text-primary"
-      >
-        {Icon}
-      </Button>
-      <span className="text-xs text-gray-500 group-hover:text-primary">
-        {label}
-      </span>
-    </div> */
 }

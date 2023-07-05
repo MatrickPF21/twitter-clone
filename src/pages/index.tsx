@@ -1,6 +1,7 @@
-import { signIn, signOut, useSession } from "next-auth/react";
-import Head from "next/head";
 import React from "react";
+import Head from "next/head";
+import { signIn, signOut, useSession } from "next-auth/react";
+
 import HomeHeader from "~/components/HomeHeader";
 import MainLayout from "~/components/Layout";
 import Post from "~/components/Post";
