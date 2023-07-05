@@ -1,13 +1,19 @@
 import React from "react";
 import Image from "next/image";
+
 import PostFooter from "./Footer";
 import PostHeader from "./Header";
+import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
+import { Button } from "../ui/button";
+import { hoverConfig } from "./FooterButton";
+import MenuButton from "./MenuButton";
 
 export interface PostProps {}
 
 export default function Post(_: PostProps) {
   return (
-    <section className="flex min-h-max gap-2 border-b border-gray-700 p-4">
+    <section className="relative flex min-h-max gap-2 border-b border-gray-700 p-4">
+      <MenuButton />
       <div className="flex-none">
         <Image
           className="rounded-full"
