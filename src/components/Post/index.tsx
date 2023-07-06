@@ -3,9 +3,6 @@ import Image from "next/image";
 
 import PostFooter from "./Footer";
 import PostHeader from "./Header";
-import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
-import { Button } from "../ui/button";
-import { hoverConfig } from "./FooterButton";
 import MenuButton from "./MenuButton";
 
 export interface PostProps {}

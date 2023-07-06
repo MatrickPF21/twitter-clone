@@ -13,13 +13,6 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 
@@ -30,12 +23,12 @@ export default function MenuButton(props: MenuButtonProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div
-          className={`group absolute right-1 top-1 flex items-center gap-2 rounded-full ${hoverConfig.comments.bg}`}
+          className={`group absolute right-1 top-1 flex items-center gap-2 rounded-full ${hoverConfig.Reply.bg}`}
           role="button"
         >
           <Button
             size="icon"
-            className={`group/button flex items-center justify-center bg-transparent p-2 text-gray-500 ${hoverConfig.comments.text}`}
+            className={`group/button flex items-center justify-center bg-transparent p-2 text-gray-500 ${hoverConfig.Reply.text}`}
           >
             <EllipsisHorizontalIcon className="h-5 w-5" />
           </Button>

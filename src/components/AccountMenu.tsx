@@ -18,7 +18,7 @@ export default function AccountMenu(props: AccountMenuProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div
-          className="flex w-full cursor-pointer items-center gap-2 rounded-full p-4 transition-colors hover:bg-hover"
+          className="flex w-full cursor-pointer items-center gap-2 rounded-full p-4 transition-colors hover:bg-hover focus-within:hover:!bg-hover"
           role="button"
           tabIndex={0}
         >
