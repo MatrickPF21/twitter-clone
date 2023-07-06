@@ -1,9 +1,22 @@
+import React from "react";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
+import type { GetServerSideProps } from "next";
+import { getServerSession } from "next-auth/next";
+
+import { authOptions } from "~/server/auth";
 import MainLayout from "~/components/Layout";
 import DiscordIcon from "~/components/icons/Discord";
 import { Button } from "~/components/ui/button";
 
 export default function SignUpPage() {
+  const handleSignDiscord = () => {
+    signIn("discord", {
+      redirect: true,
+      callbackUrl: "/",
+    });
+  };
+
   return (
     <MainLayout className="w-full border-none">
       <div className="flex min-h-screen">
@@ -36,7 +49,10 @@ export default function SignUpPage() {
               </h2>
               <div className="flex w-[320px] flex-col">
                 <div className="">
-                  <Button className="flex w-full items-center justify-center bg-white font-bold text-black">
+                  <Button
+                    className="flex w-full items-center justify-center bg-white font-bold text-black"
+                    onClick={handleSignDiscord}
+                  >
                     <DiscordIcon className="mr-2 h-6 w-6" />
                     Sign up with Discord
                   </Button>
@@ -69,11 +85,26 @@ export default function SignUpPage() {
                 </div>
               </div>
             </div>
-            <div></div>
           </div>
         </div>
       </div>
-      <div></div>
     </MainLayout>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getServerSession(context.req, context.res, authOptions);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
