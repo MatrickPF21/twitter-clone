@@ -13,25 +13,26 @@ import PostFooterButton from "./FooterButton";
 export const postFooterButtons: Omit<PostFooterButtonProps, "value">[] = [
   {
     Icon: <ChatBubbleOvalLeftIcon className="h-5 w-5" />,
-    label: "comments",
+    label: "Reply",
   },
   {
     Icon: <RetweetIcon className="h-5 w-5" />,
-    label: "retweets",
+    label: "Retweet",
   },
   {
     Icon: <HeartIcon className="h-5 w-5" />,
-    label: "likes",
+    label: "Like",
   },
   {
     Icon: <ChartBarIcon className="h-5 w-5" />,
-    label: "reach",
+    label: "View",
   },
   {
     Icon: <ShareIcon className="h-5 w-5" />,
-    label: "share",
+    label: "Share",
   },
 ];
+const avoidValuesByLabel = ["Share", "More"];
 
 export interface PostFooterProps {}
 
@@ -39,7 +40,13 @@ export default function PostFooter(_: PostFooterProps) {
   return (
     <footer className="flex items-center gap-10">
       {postFooterButtons.map((btn) => {
-        return <PostFooterButton {...btn} key={btn.label} value={0} />;
+        let value;
+
+        if (!avoidValuesByLabel.some((v) => v === btn.label)) {
+          value = 10;
+        }
+
+        return <PostFooterButton {...btn} key={btn.label} value={value} />;
       })}
     </footer>
   );
