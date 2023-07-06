@@ -1,20 +1,25 @@
 import React from "react";
 import Link from "next/link";
-import { HomeIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import {
+  EllipsisHorizontalIcon,
+  HomeIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/solid";
 import Image from "next/image";
+import AccountMenu from "./AccountMenu";
 
 const links = [
   {
     href: "/",
-    label: "Start",
+    label: "Home",
     Icon: HomeIcon,
   },
 ];
 
 export default function Sidebar() {
   return (
-    <header className="sticky left-0 w-[350px] p-4 pl-24">
-      <ul className="flex flex-col justify-start gap-2">
+    <header className="sticky left-0 top-0 flex h-screen w-[350px] flex-col p-4 pl-24">
+      <ul className="flex flex-1 flex-col justify-start gap-2">
         <li className="text-white">
           <div className="w-fit rounded-full p-3 transition-colors hover:bg-hover">
             <Link href="/">
@@ -33,6 +38,7 @@ export default function Sidebar() {
           </li>
         ))}
       </ul>
+      <AccountMenu />
     </header>
   );
 }
