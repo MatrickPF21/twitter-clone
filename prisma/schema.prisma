@@ -21,7 +21,7 @@ model Tweet {
   text   String
   userId String
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   likes Like[]
 
   // aproximated counts
@@ -88,7 +88,7 @@ model User {
   description String?
   verified    Boolean @default(false)
   tweets      Tweet[]
-  Like        Like[]
+  likes       Like[]
 }
 
 model VerificationToken {
