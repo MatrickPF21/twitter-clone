@@ -8,8 +8,11 @@ import Post from "~/components/Post";
 import Tweet from "~/components/Tweet";
 import { getServerAuthSession } from "~/server/auth";
 import { ssrHelper } from "~/server/api/ssrHelper";
+import { api } from "~/utils/api";
 
 export default function Home() {
+  const { data: tweets } = api.tweet.list.useQuery();
+
   return (
     <>
       <Head>
@@ -21,7 +24,17 @@ export default function Home() {
         <div className="w-[600px]">
           <HomeHeader />
           <Tweet />
-          <Post />
+          {!!tweets?.length &&
+            tweets.map((tweet) => (
+              <Post
+                key={tweet.id}
+                authorName={tweet.user.name}
+                authorScreenName={tweet.user.screenName}
+                datetime={tweet.createadAt.toISOString()}
+                likes={tweet.likesCounter}
+                text={tweet.text}
+              />
+            ))}
         </div>
       </MainLayout>
     </>
@@ -43,6 +56,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const userId = session.user.id;
 
   await ssrHelper.profile.baseById.prefetch({ id: userId });
+  await ssrHelper.tweet.list.prefetch();
 
   return {
     props: {
