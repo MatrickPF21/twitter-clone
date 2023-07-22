@@ -1,10 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import {
-  EllipsisHorizontalIcon,
-  HomeIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/solid";
+import { HomeIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import AccountMenu from "./AccountMenu";
 
