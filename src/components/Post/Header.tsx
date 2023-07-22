@@ -1,22 +1,28 @@
+import dayjs from "dayjs";
 import React from "react";
 
-export interface PostHeaderProps {}
+export interface PostHeaderProps {
+  username?: string | null;
+  screenName?: string | null;
+  datetime: string;
+  text: string;
+}
 
-export default function PostHeader(_: PostHeaderProps) {
+export default function PostHeader({
+  username,
+  screenName,
+  datetime,
+  text,
+}: PostHeaderProps) {
   return (
     <header className="w-full pr-5">
       <div className="flex gap-1">
-        <span className="font-bold">MatrickPF21</span>
-        <span className="text-gray-500">@matrickpf21</span>
+        <span className="font-bold">{username}</span>
+        <span className="text-gray-500">@{screenName}</span>
         <span className="leading-4 text-gray-500">.</span>
-        <span className="text-gray-500">20m</span>
+        <span className="text-gray-500">{dayjs(datetime).fromNow(true)}</span>
       </div>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt doloremque
-        asperiores deleniti ad qui optio soluta molestiae rerum nam id eaque
-        deserunt sit aliquid consequuntur expedita laudantium possimus, at
-        tempora.
-      </p>
+      <p>{text}</p>
     </header>
   );
 }

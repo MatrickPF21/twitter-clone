@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 import RetweetIcon from "../icons/Retweet";
-import type { PostFooterButtonProps } from "./FooterButton";
+import type { PostFooterButtonProps, PostFooterLabel } from "./FooterButton";
 import PostFooterButton from "./FooterButton";
 
 export const postFooterButtons: Omit<PostFooterButtonProps, "value">[] = [
@@ -34,9 +34,9 @@ export const postFooterButtons: Omit<PostFooterButtonProps, "value">[] = [
 ];
 const avoidValuesByLabel = ["Share", "More"];
 
-export interface PostFooterProps {}
+export interface PostFooterProps extends Record<PostFooterLabel, number> {}
 
-export default function PostFooter(_: PostFooterProps) {
+export default function PostFooter(props: Partial<PostFooterProps>) {
   return (
     <footer className="flex items-center gap-10">
       {postFooterButtons.map((btn) => {
@@ -45,6 +45,8 @@ export default function PostFooter(_: PostFooterProps) {
         if (!avoidValuesByLabel.some((v) => v === btn.label)) {
           value = 10;
         }
+
+        value = props[btn.label];
 
         return <PostFooterButton {...btn} key={btn.label} value={value} />;
       })}

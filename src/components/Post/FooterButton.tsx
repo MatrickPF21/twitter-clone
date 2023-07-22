@@ -9,13 +9,19 @@ import {
 } from "../ui/tooltip";
 import { twMerge } from "tailwind-merge";
 
-type Label = "Reply" | "Retweet" | "Like" | "View" | "Share" | "More";
+export type PostFooterLabel =
+  | "Reply"
+  | "Retweet"
+  | "Like"
+  | "View"
+  | "Share"
+  | "More";
 type HoverConfig = {
   bg: string;
   text: string;
 };
 
-export const hoverConfig: Record<Label, HoverConfig> = {
+export const hoverConfig: Record<PostFooterLabel, HoverConfig> = {
   Reply: {
     bg: "[&>button]:hover:bg-[#0a171f] [&>button]:active:bg-[#0d1e28]",
     text: "group-hover:text-primary",
@@ -44,7 +50,7 @@ export const hoverConfig: Record<Label, HoverConfig> = {
 
 export interface PostFooterButtonProps {
   Icon: React.ReactNode;
-  label: Label | string;
+  label: PostFooterLabel;
   value?: number;
   className?: string;
 }
