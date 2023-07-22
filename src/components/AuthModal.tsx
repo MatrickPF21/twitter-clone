@@ -70,7 +70,7 @@ export default function AuthModal({
           <div className="flex w-[320px] flex-col">
             <div className="">
               <Button
-                variant="bw"
+                variant="noir"
                 className="flex w-full items-center justify-center"
                 onClick={handleSignDiscord}
               >
