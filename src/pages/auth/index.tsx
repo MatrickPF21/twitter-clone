@@ -2,14 +2,19 @@ import React from "react";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 import type { GetServerSideProps } from "next";
-import { getServerSession } from "next-auth/next";
 
-import { authOptions } from "~/server/auth";
+import { getServerAuthSession } from "~/server/auth";
 import MainLayout from "~/components/Layout";
 import DiscordIcon from "~/components/icons/Discord";
 import { Button } from "~/components/ui/button";
+import AuthModal from "~/components/AuthModal";
 
 export default function SignUpPage() {
+  const [showModal, setShowModal] = React.useState(false);
+
+  const toggleModal = (value?: boolean) =>
+    setShowModal(value ? value : (prev) => !prev);
+
   const handleSignDiscord = () => {
     signIn("discord", {
       redirect: true,
@@ -20,6 +25,11 @@ export default function SignUpPage() {
   return (
     <MainLayout className="w-full border-none">
       <div className="flex min-h-screen">
+        <AuthModal
+          onOpenChange={toggleModal}
+          open={showModal}
+          handleSignDiscord={handleSignDiscord}
+        />
         <div className="relative min-h-[45vh] w-full min-w-[45vw]">
           <Image src={"/assets/images/sign_in_bg.png"} alt="bg" fill={true} />
           <Image
@@ -57,7 +67,7 @@ export default function SignUpPage() {
                     Sign up with Discord
                   </Button>
                 </div>
-                <div className="my-2 flex h-5  items-center gap-2">
+                {/* <div className="my-2 flex h-5  items-center gap-2">
                   <div className="h-[1px] w-full bg-[#2f3336]" />
                   <div>
                     <span>or</span>
@@ -66,7 +76,7 @@ export default function SignUpPage() {
                 </div>
                 <div className="">
                   <Button className="w-full">Create account</Button>
-                </div>
+                </div> */}
                 <div className="mb-5 mt-2">
                   <p className="text-[11px]">
                     By signing up, you agree to the Terms of Service and Privacy
@@ -78,7 +88,10 @@ export default function SignUpPage() {
                     <span>Already have an account?</span>
                   </div>
                   <div className="w-full">
-                    <Button className="flex w-full items-center justify-center border border-[#2f3336] bg-transparent text-primary hover:bg-[#031018]">
+                    <Button
+                      className="flex w-full items-center justify-center border border-[#2f3336] bg-transparent text-primary hover:bg-[#031018]"
+                      onClick={() => toggleModal(true)}
+                    >
                       Sign in
                     </Button>
                   </div>
@@ -93,7 +106,7 @@ export default function SignUpPage() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getServerSession(context.req, context.res, authOptions);
+  const session = await getServerAuthSession(context);
 
   if (session) {
     return {
