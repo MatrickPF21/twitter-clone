@@ -9,11 +9,26 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { api } from "~/utils/api";
 
 export interface AccountMenuProps {}
 
 export default function AccountMenu(props: AccountMenuProps) {
+  const session = useSession();
+
+  const { data: profile, isLoading } = api.profile.baseById.useQuery(
+    {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+      id: session.data?.user?.id!,
+    },
+    { enabled: !!session.data?.user.id }
+  );
+
+  if (!session) {
+    return null;
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,22 +37,28 @@ export default function AccountMenu(props: AccountMenuProps) {
           role="button"
           tabIndex={0}
         >
-          <div>
-            <Image
-              src="/assets/images/user.jpg"
-              alt="user image"
-              width={40}
-              height={40}
-              className="rounded-full"
-            />
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="font-bold text-white">MatrickPF21</span>
-            <span className="text-gray-500">@matrickpf21</span>
-          </div>
-          <div className="ml-auto">
-            <EllipsisHorizontalIcon className="h5 w-5 text-white" />
-          </div>
+          {!isLoading ? (
+            <>
+              <div>
+                <Image
+                  src={profile?.image ?? "/assets/images/user.jpg"}
+                  alt="user image"
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
+              </div>
+              <div className="flex flex-col items-center">
+                <span className="font-bold text-white">{profile?.name}</span>
+                <span className="text-gray-500">@{profile?.screenName}</span>
+              </div>
+              <div className="ml-auto">
+                <EllipsisHorizontalIcon className="h5 w-5 text-white" />
+              </div>
+            </>
+          ) : (
+            <span>Loading...</span>
+          )}
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -61,7 +82,9 @@ export default function AccountMenu(props: AccountMenuProps) {
               })
             }
           >
-            <span className="text-[15px] font-bold">Log out @MatrickPF21</span>
+            <span className="text-[15px] font-bold">
+              Log out @{profile?.screenName}
+            </span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
