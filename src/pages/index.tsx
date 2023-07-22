@@ -17,15 +17,15 @@ export default function Home() {
     <>
       <Head>
         <title>Home / Twitter</title>
-        <meta name="description" content="Created with create-t3-app" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta name='description' content='Created with create-t3-app' />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
-      <MainLayout className="relative" sidebar>
-        <div className="w-[600px]">
+      <MainLayout className='relative' sidebar>
+        <div className='w-[600px]'>
           <HomeHeader />
           <Tweet />
           {!!tweets?.length &&
-            tweets.map((tweet) => (
+            tweets.map(tweet => (
               <Post
                 key={tweet.id}
                 authorName={tweet.user.name}
@@ -33,6 +33,8 @@ export default function Home() {
                 datetime={tweet.createadAt.toISOString()}
                 likes={tweet.likesCounter}
                 text={tweet.text}
+                likedByMe={tweet.likedByMe}
+                postId={tweet.id}
               />
             ))}
         </div>
@@ -41,7 +43,7 @@ export default function Home() {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async context => {
   const session = await getServerAuthSession(context);
 
   if (!session) {
