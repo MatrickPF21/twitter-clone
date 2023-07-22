@@ -4,6 +4,9 @@ import { type AppType } from "next/app";
 import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import React from "react";
+import relativeTime from "dayjs/plugin/relativeTime";
+import dayjs from "dayjs";
+dayjs.extend(relativeTime);
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
