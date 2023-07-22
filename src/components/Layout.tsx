@@ -12,7 +12,7 @@ export default function MainLayout({
   ...props
 }: React.PropsWithChildren<MainLayoutProps>) {
   return (
-    <div className="flex min-h-screen bg-black">
+    <div className="flex min-h-screen bg-black text-white">
       {sidebar && <Sidebar />}
       <main
         className={twMerge(
