@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "~/utils/index";
 
 const buttonVariants = cva(
-  "rounded-full bg-primary font-bold transition-opacity hover:opacity-90 transition-colors",
+  "rounded-full bg-primary font-bold transition-opacity hover:opacity-90 transition-colors disabled:opacity-50",
   {
     variants: {
       variant: {
