@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import { api } from "~/utils/api";
 
-export default function Tweet() {
+export default function NewTweet() {
   const context = api.useContext();
   const [value, setValue] = React.useState("");
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
