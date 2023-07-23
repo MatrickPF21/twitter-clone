@@ -7,7 +7,7 @@ import {
   NoSymbolIcon,
   FlagIcon,
 } from "@heroicons/react/24/outline";
-import { hoverConfig } from "./FooterButton";
+import { labelConfig } from "./FooterButton";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,12 +23,12 @@ export default function MenuButton(props: MenuButtonProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div
-          className={`group absolute right-1 top-1 flex items-center gap-2 rounded-full ${hoverConfig.Reply.bg}`}
+          className={`group absolute right-1 top-1 flex items-center gap-2 rounded-full ${labelConfig.Reply.bg}`}
           role="button"
         >
           <Button
             size="icon"
-            className={`group/button flex items-center justify-center bg-transparent p-2 text-gray-500 ${hoverConfig.Reply.text}`}
+            className={`group/button flex items-center justify-center bg-transparent p-2 text-gray-500 ${labelConfig.Reply.text}`}
           >
             <EllipsisHorizontalIcon className="h-5 w-5" />
           </Button>
