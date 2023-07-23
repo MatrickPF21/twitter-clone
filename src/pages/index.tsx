@@ -5,7 +5,7 @@ import type { GetServerSideProps } from "next";
 import HomeHeader from "~/components/HomeHeader";
 import MainLayout from "~/components/Layout";
 import Post from "~/components/Post";
-import Tweet from "~/components/Tweet";
+import NewTweet from "~/components/NewTweet";
 import { getServerAuthSession } from "~/server/auth";
 import { ssrHelper } from "~/server/api/ssrHelper";
 import { api } from "~/utils/api";
@@ -23,7 +23,7 @@ export default function Home() {
       <MainLayout className='relative' sidebar>
         <div className='w-[600px]'>
           <HomeHeader />
-          <Tweet />
+          <NewTweet />
           {!!tweets?.length &&
             tweets.map(tweet => (
               <Post
@@ -49,7 +49,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   if (!session) {
     return {
       redirect: {
-        destination: "/",
+        destination: "/auth",
         permanent: false,
       },
     };
