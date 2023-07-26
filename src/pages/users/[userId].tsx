@@ -3,6 +3,7 @@ import {
   EnvelopeIcon,
   UserPlusIcon,
 } from "@heroicons/react/24/outline";
+import type { GetServerSideProps } from "next";
 import Image from "next/image";
 import React from "react";
 
@@ -11,6 +12,7 @@ import MainLayout from "~/components/Layout";
 import NavButtons from "~/components/NavButtons";
 import ProfileHeader from "~/components/ProfileHeader";
 import { Button } from "~/components/ui/button";
+import { ssrHelper } from "~/server/api/ssrHelper";
 
 const navs = ["Tweets", "Replies", "Highlights", "Media", "Likes"] as const;
 type Nav = (typeof navs)[number];
@@ -24,12 +26,12 @@ export default function UserProfile() {
         <div className='w-[600px]'>
           <ProfileHeader />
           <div>
-            <div className='relative h-[200px] w-full'>
-              <Image
+            <div className='relative h-[200px] w-full bg-[#15202b]'>
+              {/* <Image
                 src='/assets/images/bg_profile.jpg'
                 fill
                 alt='user image'
-              />
+              /> */}
             </div>
             <div className='relative'>
               <div className='p-3'>
@@ -59,7 +61,7 @@ export default function UserProfile() {
                   >
                     <UserPlusIcon className='h-5 w-5' />
                   </Button>
-                  <Button variant="noir">Follow</Button>
+                  <Button variant='noir'>Follow</Button>
                 </div>
                 <div>
                   <div className='mb-2'>
@@ -97,3 +99,22 @@ export default function UserProfile() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async context => {
+  const userId = context.params?.userId;
+
+  if (!userId || Array.isArray(userId))
+    return {
+      props: {
+        error: true,
+      },
+    };
+
+  await ssrHelper.profile.extendedById.prefetch(userId);
+
+  return {
+    props: {
+      trpcState: ssrHelper.dehydrate(),
+    },
+  };
+};

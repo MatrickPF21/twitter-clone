@@ -26,4 +26,28 @@ export const profileRouter = createTRPCRouter({
 
       return user;
     }),
+  extendedById: publicProcedure
+    .input(z.string())
+    .query(async ({ input, ctx }) => {
+      const userId = input;
+
+      const user = await ctx.prisma.user.findUnique({
+        where: { id: userId },
+        select: {
+          tweets: {
+            orderBy: [
+              {
+                createadAt: "desc",
+              },
+            ],
+            take: 10,
+          },
+        },
+      });
+
+      if (!user)
+        throw new TRPCError({ message: "User not found", code: "NOT_FOUND" });
+
+      return user;
+    }),
 });
