@@ -30,10 +30,11 @@ export const profileRouter = createTRPCRouter({
     .input(z.string())
     .query(async ({ input, ctx }) => {
       const userId = input;
+      const loggedUserId = ctx.session?.user?.id;
 
       const user = await ctx.prisma.user.findUnique({
         where: { id: userId },
-        select: {
+        include: {
           tweets: {
             orderBy: [
               {
@@ -41,6 +42,20 @@ export const profileRouter = createTRPCRouter({
               },
             ],
             take: 10,
+            include: {
+              likes: !loggedUserId
+                ? false
+                : {
+                    where: {
+                      userId: loggedUserId,
+                    },
+                  },
+            },
+          },
+          _count: {
+            select: {
+              tweets: true,
+            },
           },
         },
       });
@@ -48,6 +63,12 @@ export const profileRouter = createTRPCRouter({
       if (!user)
         throw new TRPCError({ message: "User not found", code: "NOT_FOUND" });
 
-      return user;
+      return {
+        ...user,
+        tweets: user.tweets.map(tweet => ({
+          ...tweet,
+          likedByMe: tweet.likes.length > 0,
+        })),
+      };
     }),
 });
