@@ -112,4 +112,38 @@ export const tweetsRouter = createTRPCRouter({
         count: newTweet.likesCounter,
       };
     }),
+  delete: protectedProcedure
+    .input(z.object({ tweetId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const userId = ctx.session.user.id;
+      const tweetId = input.tweetId;
+
+      const tweet = await ctx.prisma.tweet.findUnique({
+        where: {
+          id: tweetId,
+        },
+      });
+
+      if (!tweet) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Tweet not found",
+        });
+      }
+
+      if (tweet.userId !== userId) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You can't delete this tweet",
+        });
+      }
+
+      await ctx.prisma.tweet.delete({
+        where: {
+          id: tweetId,
+        },
+      });
+
+      return tweetId;
+    }),
 });
