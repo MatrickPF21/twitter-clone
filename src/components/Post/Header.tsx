@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import Link from "next/link";
 import React from "react";
 
 export interface PostHeaderProps {
@@ -6,6 +7,7 @@ export interface PostHeaderProps {
   screenName?: string | null;
   datetime: string;
   text: string;
+  userId?: string | null;
 }
 
 export default function PostHeader({
@@ -13,14 +15,19 @@ export default function PostHeader({
   screenName,
   datetime,
   text,
+  userId,
 }: PostHeaderProps) {
   return (
-    <header className="w-full pr-5">
-      <div className="flex gap-1">
-        <span className="font-bold">{username}</span>
-        <span className="text-gray-500">@{screenName}</span>
-        <span className="leading-4 text-gray-500">.</span>
-        <span className="text-gray-500">{dayjs(datetime).fromNow(true)}</span>
+    <header className='w-full pr-5 whitespace-pre-line'>
+      <div className='flex gap-1'>
+        <span className='font-bold'>
+          <Link href={`/users/${userId}`}>{username}</Link>
+        </span>
+        <span className='text-gray-500'>
+          <Link href={`/users/${userId}`}>@{screenName}</Link>
+        </span>
+        <span className='leading-4 text-gray-500'>.</span>
+        <span className='text-gray-500'>{dayjs(datetime).fromNow(true)}</span>
       </div>
       <p>{text}</p>
     </header>

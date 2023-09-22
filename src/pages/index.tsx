@@ -9,9 +9,35 @@ import NewTweet from "~/components/NewTweet";
 import { getServerAuthSession } from "~/server/auth";
 import { ssrHelper } from "~/server/api/ssrHelper";
 import { api } from "~/utils/api";
+import LoadSpinner from "~/components/LoadSpinner";
 
 export default function Home() {
-  const { data: tweets } = api.tweet.list.useQuery();
+  const { data: tweets, isLoading } = api.tweet.list.useQuery();
+
+  let content;
+
+  if (isLoading) {
+    content = (
+      <div className='flex min-h-full w-full items-center justify-center'>
+        <LoadSpinner />
+      </div>
+    );
+  } else if (tweets?.length) {
+    content = tweets.map(tweet => (
+      <Post
+        key={tweet.id}
+        authorName={tweet.user.name}
+        authorScreenName={tweet.user.screenName}
+        datetime={tweet.createadAt.toISOString()}
+        likes={tweet.likesCounter}
+        text={tweet.text}
+        likedByMe={tweet.likedByMe}
+        postId={tweet.id}
+        authorImage={tweet.user.image}
+        authorId={tweet.user.id}
+      />
+    ));
+  }
 
   return (
     <>
@@ -24,19 +50,7 @@ export default function Home() {
         <div className='w-[600px]'>
           <HomeHeader />
           <NewTweet />
-          {!!tweets?.length &&
-            tweets.map(tweet => (
-              <Post
-                key={tweet.id}
-                authorName={tweet.user.name}
-                authorScreenName={tweet.user.screenName}
-                datetime={tweet.createadAt.toISOString()}
-                likes={tweet.likesCounter}
-                text={tweet.text}
-                likedByMe={tweet.likedByMe}
-                postId={tweet.id}
-              />
-            ))}
+          {content}
         </div>
       </MainLayout>
     </>
